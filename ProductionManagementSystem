@@ -1,0 +1,42 @@
+--Kevin Odhiambo Onunga 
+--CT100/G/26137/25
+
+CREATE DATABASE ProductionManagementSystem;
+
+USE ProductionManagementSystem;
+
+CREATE TABLE Raw_Materials (
+    material_ID INT PRIMARY KEY,
+    type VARCHAR(50),
+    Units DECIMAL(10, 2),
+    UnitCost DECIMAL(10, 2)
+);
+
+CREATE TABLE Lot (
+    LotNumber INT PRIMARY KEY,
+    CreateDate DATE,
+    Cost_Of_Materials DECIMAL(15, 2)
+);
+
+CREATE TABLE Production_Units (
+    serial INT PRIMARY KEY,
+    exactWeight DECIMAL(10, 2),
+    ProductType VARCHAR(50),
+    ProductDesc VARCHAR(100)
+);
+
+CREATE TABLE Lot_RawMaterials (
+    LotNumber INT,
+    material_ID INT,
+    PRIMARY KEY (LotNumber, material_ID),
+    FOREIGN KEY (LotNumber) REFERENCES Lot(LotNumber),
+    FOREIGN KEY (material_ID) REFERENCES Raw_Materials(material_ID)
+);
+
+CREATE TABLE Lot_ProductionUnits (
+    LotNumber INT,
+    serial INT,
+    PRIMARY KEY (LotNumber, serial),
+    FOREIGN KEY (LotNumber) REFERENCES Lot(LotNumber),
+    FOREIGN KEY (serial) REFERENCES Production_Units(serial)
+);
